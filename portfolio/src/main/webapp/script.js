@@ -16,14 +16,14 @@
  * Adds a random greeting to the page.
  */
 function addRandomFact() {
-  const fact =
+  const facts =
       ['My childhood dream job was to be a police officer!', 'I am a huge fan of the Marvel universe!', 
       'My favourite superhero is Iron Man!', 'I do Taekwondo', 'I love playing tennis'];
 
   // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+  const fact = facts[Math.floor(Math.random() * facts.length)];
 
   // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
+  const factContainer = document.getElementById('greeting-container');
+  factContainer.innerText = fact;
 }
