@@ -18,10 +18,11 @@
   background-color: #ddd;
   color: black;
 }
-.topnav a.active {
+.topnav a:active {
   background-color: rgb(112, 194, 241);
   color: white;
-}.cover {
+}
+.cover {
   background-image: url("images/wallpaper.jpg");
   background-color: #90CAF9;
   background-position: center bottom;
