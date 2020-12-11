@@ -42,4 +42,14 @@
   font-weight: bold;
   color: white;
 }
-
+.about {
+  text-align: left;
+  font-family: Arial, Helvetica, sans-serif;
+  margin-top: 30px;
+  padding-left: 20px;
+}
+.about p {
+  font-size: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 10px 40px;
+}
