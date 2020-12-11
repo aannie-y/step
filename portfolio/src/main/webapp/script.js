@@ -26,3 +26,23 @@ function addRandomGreeting() {
   const greetingContainer = document.getElementById('greeting-container');
   greetingContainer.innerText = greeting;
 }
+
+// sticky navbar code from w3 schools
+window.onscroll = function() {
+  stickyNav()
+};
+
+// Get navbar
+const navbar = document.getElementById('myTopNav');
+// Get offset position of navbar
+const sticky = navbar.offsetTop;
+
+// Add sticky class to navbar when you reach its scroll position. Remove
+// "sticky" when you leave scroll position
+function stickyNav() {
+  if (window.pageYOffset >= sticky) {
+    navbar.classList.add('sticky');
+  } else {
+    navbar.classList.remove('sticky');
+  }
+}
