@@ -33,9 +33,9 @@ window.onscroll = function() {
 };
 
 // Get navbar
-var navbar = document.getElementById('myTopNav');
+const navbar = document.getElementById('myTopNav');
 // Get offset position of navbar
-var sticky = navbar.offsetTop;
+const sticky = navbar.offsetTop;
 
 // Add sticky class to navbar when you reach its scroll position. Remove
 // "sticky" when you leave scroll position
