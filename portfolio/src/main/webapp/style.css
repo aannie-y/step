@@ -105,6 +105,15 @@
   text-align: center;
 }
 
+.find_me {
+  padding-top: 30px;
+  text-align: center;
+}
+
+.find_me p {
+  font-size: 25px;
+}
+
 .funFact {
   padding-top: 50px;
   text-align: center;
