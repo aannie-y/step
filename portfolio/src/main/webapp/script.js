@@ -33,13 +33,13 @@ function addRandomFact() {
 
 document.addEventListener('DOMContentLoaded', function() {
   window.addEventListener('scroll', stickyNav);
-  // Get navbar
+  // Get navbar.
   const navbar = document.getElementById('myTopNav');
-  // Get offset position of navbar
+  // Get offset position of navbar.
   const sticky = navbar.offsetTop;
 
-  // Add sticky class to navbar when you reach its scroll position. Remove
-  // "sticky" when you leave scroll position
+  // Add sticky class to navbar when you reach its scroll position.
+  // Remove "sticky" when you leave scroll position.
   function stickyNav() {
     if (window.pageYOffset >= sticky) {
         navbar.classList.add('sticky');
