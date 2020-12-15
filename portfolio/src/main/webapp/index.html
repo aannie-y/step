@@ -94,9 +94,17 @@
           </div>
         </section>
       </div>
-      <p>Click to generate a message</p>
-      <button onclick="getMessage()">Message!</button>
+      <p>Click to view comments</p>
+      <button onclick="getMessage()">Comments</button>
       <div id="quote-container"></div>
     </div>
+
+    <form action="/comment" method="POST">
+    <p>Please leave a comment:</p>
+    <textarea name="comment-input">Enter comment</textarea>
+    <br/><br/>
+    <input type="submit" value="submit"/>
+    </form>
+
   </body>
 </html>

@@ -23,20 +23,25 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
-@WebServlet("/data")
+@WebServlet("/comment")
 public class DataServlet extends HttpServlet {
   private ArrayList<String> commentsString = new ArrayList<String>();
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    // hard coded values for array
-    commentsString.add("hello ");
-    commentsString.add("this is ");
-    commentsString.add("a random comment ");
-
-    // convert arrayList into json using Gson
-    String json = new Gson().toJson(commentsString);
     response.setContentType("text/html;");
+    // Convert arrayList into json using Gson.
+    String json = new Gson().toJson(commentsString);
     response.getWriter().println(json);
+  }
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // Get the comment from the form.
+    String comment = request.getParameter("comment-input");
+    commentsString.add(comment);
+    response.setContentType("text/html");
+    response.getWriter().println("Thanks for your comment!");
+    response.sendRedirect("/index.html");
   }
 }
