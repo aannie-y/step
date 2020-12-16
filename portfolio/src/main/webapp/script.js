@@ -13,36 +13,38 @@
 // limitations under the License.
 
 /**
- * Adds a random greeting to the page.
+ * Adds a random fact to the page.
  */
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+function addRandomFact() {
+  const facts = [
+    'My childhood dream job was to be a police officer!',
+    'I am a huge fan of the Marvel universe!',
+    'My favourite superhero is Iron Man!', 'I do Taekwondo',
+    'I love playing tennis', 'I recently started to learn tricking!'
+  ];
 
-  // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+  // Pick a random fact.
+  const fact = facts[Math.floor(Math.random() * facts.length)];
 
   // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
+  const factContainer = document.getElementById('fact-container');
+  factContainer.innerText = fact;
 }
 
-// sticky navbar code from w3 schools
-window.onscroll = function() {
-  stickyNav()
-};
+document.addEventListener('DOMContentLoaded', function() {
+  window.addEventListener('scroll', stickyNav);
+  // Get navbar.
+  const navbar = document.getElementById('myTopNav');
+  // Get offset position of navbar.
+  const sticky = navbar.offsetTop;
 
-// Get navbar
-const navbar = document.getElementById('myTopNav');
-// Get offset position of navbar
-const sticky = navbar.offsetTop;
-
-// Add sticky class to navbar when you reach its scroll position. Remove
-// "sticky" when you leave scroll position
-function stickyNav() {
-  if (window.pageYOffset >= sticky) {
-    navbar.classList.add('sticky');
-  } else {
-    navbar.classList.remove('sticky');
+  // Add sticky class to navbar when you reach its scroll position.
+  // Remove "sticky" when you leave scroll position.
+  function stickyNav() {
+    if (window.pageYOffset >= sticky) {
+      navbar.classList.add('sticky');
+    } else {
+      navbar.classList.remove('sticky');
+    }
   }
-}
+})

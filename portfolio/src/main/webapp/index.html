@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
-    <title>My Portfolio</title>
+    <meta charset="UTF-8", content="width=device-width" , initial-scale=1/>
+    <title>Annie's Portfolio</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
@@ -11,9 +11,7 @@
       <a href="#home" class="active">Home</a>
       <a href="#about">About me</a>
       <a href="#project">Projects</a>
-      <a href="#hobbies">What I enjoy</a>
-      <a href="#gallery">Gallery</a> 
-      <a href="#blog">Blog Posts</a>
+      <a href="#galleryDiv">Gallery</a> 
     </div>
     <div class="content">
       <div class="cover" id="home">
@@ -29,7 +27,7 @@
             Nowadays I still spend a lot of my free time playing video games, however I have shifted my career interest from games to general software programming.</p>
         <p>In my spare time, besides from playing video games, I enjoy hiking, cycling and working out.</p>
       </div>
-      <div id="project">
+      <div class="project" id="project">
         <h1>Projects</h1>
         <p>Projects I have worked on in the past few years include:</p>
         <ul>
@@ -44,13 +42,15 @@
           <li>Strategy conquest game</li>
           <p>Created the backend and frontend of a strategy conquest game using Java and Javafx.</p>
         </ul>
-        <p>Find me on:</p>
-        <a href="https://www.linkedin.com/in/annie-yang-190a34183/">
-          <img src="images/linkedin_logo.png" width=100 height=50>
-        </a>
-        <a href="https://github.com/aannie-y?tab=repositories">
-          <img src="images/github.png" width=150 height=50>
-        </a>
+        <div class="find_me">
+          <p>Find me on</p>
+          <a href="https://www.linkedin.com/in/annie-yang-190a34183/">
+            <img src="images/linkedin_logo.png" alt="Linkedin Logo" width=100 height=50>
+          </a>
+          <a href="https://github.com/aannie-y?tab=repositories">
+            <img src="images/github.png" alt="Github logo" width=150 height=50>
+          </a>
+        </div>
       </div>
       <div class="galleryDiv" id="galleryDiv">
         <h1>Gallery</h1>
@@ -58,41 +58,46 @@
         <section class="container">
           <div class="gallery">
             <a target="_blank" href="images/remarkables.jpg">
-              <img src="images/remarkables.jpg">
+              <img class="galleryImg" src="images/remarkables.jpg">
             </a>
             <div class="desc">Remarkables Mountain Range in New Zealand</div>
           </div>
           <div class="gallery">
             <a target="_blank" href="images/seacliff.jpg">
-              <img src="images/seacliff.jpg">
+              <img class="galleryImg" src="images/seacliff.jpg">
             </a>
             <div class="desc">Seacliff Bridge</div>
           </div>
           <div class="gallery">
             <a target="_blank" href="images/skydiving.jpg">
-              <img src="images/skydiving.jpg">
+              <img class="galleryImg" src="images/skydiving.jpg">
             </a>
             <div class="desc">Skydiving at St Kilda</div>
           </div>
           <div class="gallery">
             <a target="_blank" href="images/helicopter.jpg">
-              <img src="images/helicopter.jpg">
+              <img class="galleryImg" src="images/helicopter.jpg">
             </a>
             <div class="desc">Helicopter ride in New Zealand</div>
           </div>
           <div class="gallery">
             <a target="_blank" href="images/superman.jpg">
-              <img src="images/superman.jpg">
+              <img class="galleryImg" src="images/superman.jpg">
             </a>
             <div class="desc">At the Superman Escape ride in Movie World</div>
           </div>
           <div class="gallery">
             <a target="_blank" href="images/paddleboarding.jpg">
-              <img src="images/paddleboarding.jpg">
+              <img class="galleryImg" src="images/paddleboarding.jpg">
             </a>
             <div class="desc">My first time paddleboarding!</div>
           </div>
         </section>
+      </div>
+      <div class="funFact">
+        <p>Click here for a fun fact about me!</p>
+        <button onclick="addRandomFact()">Hello</button>
+        <div id="fact-container"></div>
       </div>
     </div>
   </body>
