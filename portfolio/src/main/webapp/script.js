@@ -47,4 +47,11 @@ document.addEventListener('DOMContentLoaded', function() {
       navbar.classList.remove('sticky');
     }
   }
-})
+}
+
+function getMessage() {
+  fetch('/comment').then(response => response.text()).then((quote) => {
+    document.getElementById('quote-container').innerText = quote;
+    console.log(quote);
+  });
+}

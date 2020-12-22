@@ -99,6 +99,17 @@
         <button onclick="addRandomFact()">Hello</button>
         <div id="fact-container"></div>
       </div>
+      <p>Click to view comments</p>
+      <button onclick="getMessage()">Comments</button>
+      <div id="quote-container"></div>    
     </div>
+
+    <form action="/comment" method="POST">
+      <p>Please leave a comment:</p>
+      <textarea name="comment-input">Enter comment</textarea>
+      <br/><br/>
+      <input type="submit" value="submit"/>
+    </form>
+
   </body>
 </html>
