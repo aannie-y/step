@@ -47,11 +47,41 @@ document.addEventListener('DOMContentLoaded', function() {
       navbar.classList.remove('sticky');
     }
   }
+})
+/**
+ * Fetches comments from the server and adds them to the DOM.
+ */
+function loadComments() {
+  fetch('/comment').then(response => response.json()).then((comments) => {
+    const commentListElement = document.getElementById('comment-list');
+    comments.forEach((comment) => {
+      commentListElement.appendChild(createCommentElement(comment));
+    })
+  });
 }
 
-function getMessage() {
-  fetch('/comment').then(response => response.text()).then((quote) => {
-    document.getElementById('quote-container').innerText = quote;
-    console.log(quote);
+function createCommentElement(comment) {
+  const commentElement = document.createElement('li');
+  commentElement.className = 'comment';
+
+  const titleElement = document.createElement('span');
+  titleElement.innerText = comment.content;
+  console.log(comment.content);
+
+  const deleteButtonElement = document.createElement('button');
+  deleteButtonElement.innerText = 'Delete';
+  deleteButtonElement.addEventListener('click', () => {
+    deleteComment(comment);
+    commentElement.remove();
   });
+
+  commentElement.appendChild(titleElement);
+  commentElement.appendChild(deleteButtonElement);
+  return commentElement;
+}
+
+function deleteComment(comment) {
+  const params = new URLSearchParams();
+  params.append('id', comment.id);
+  fetch('/delete-data', {method: 'POST', body: params});
 }

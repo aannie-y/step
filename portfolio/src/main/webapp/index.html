@@ -11,7 +11,7 @@
       <a href="#home" class="active">Home</a>
       <a href="#about">About me</a>
       <a href="#project">Projects</a>
-      <a href="#galleryDiv">Gallery</a> 
+      <a href="#galleryDiv">Gallery</a>
     </div>
     <div class="content">
       <div class="cover" id="home">
@@ -99,17 +99,16 @@
         <button onclick="addRandomFact()">Hello</button>
         <div id="fact-container"></div>
       </div>
+      </br>
+      <form action="/comment" method="POST">
+        <p>Please leave a comment:</p>
+        <textarea name="title">Enter comment</textarea>
+        <br/><br/>
+        <input type="submit" value="submit"/>
+      </form>
       <p>Click to view comments</p>
-      <button onclick="getMessage()">Comments</button>
-      <div id="quote-container"></div>    
+      <button onclick="loadComments()">Comments</button>
+      <ul id="comment-list"></ul>
     </div>
-
-    <form action="/comment" method="POST">
-      <p>Please leave a comment:</p>
-      <textarea name="comment-input">Enter comment</textarea>
-      <br/><br/>
-      <input type="submit" value="submit"/>
-    </form>
-
   </body>
 </html>
