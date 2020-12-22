@@ -72,8 +72,6 @@ function createCommentElement(comment) {
   deleteButtonElement.innerText = 'Delete';
   deleteButtonElement.addEventListener('click', () => {
     deleteComment(comment);
-
-    // Remove the task from the DOM.
     commentElement.remove();
   });
 
@@ -82,7 +80,6 @@ function createCommentElement(comment) {
   return commentElement;
 }
 
-/** Tells the server to delete the task. */
 function deleteComment(comment) {
   const params = new URLSearchParams();
   params.append('id', comment.id);

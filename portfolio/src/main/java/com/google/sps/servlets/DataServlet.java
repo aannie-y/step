@@ -47,8 +47,7 @@ public class DataServlet extends HttpServlet {
       long timestamp = (long) entity.getProperty("timestamp");
       String ip = (String) entity.getProperty("ip");
 
-      Comment comment = new Comment(id, content, timestamp, ip);
-      comments.add(comment);
+      comments.add(new Comment(id, content, timestamp, ip));
     }
     // Convert arrayList into json using Gson.
     String json = new Gson().toJson(comments);
