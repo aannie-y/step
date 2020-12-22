@@ -22,11 +22,9 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
 import com.google.sps.data.Comment;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -42,8 +40,8 @@ public class DataServlet extends HttpServlet {
     Query query = new Query("Comment").addSort("timestamp", SortDirection.ASCENDING);
     PreparedQuery results = datastore.prepare(query);
 
-    List<Comment> comments = new ArrayList<>();
-    for (Entity entity: results.asIterable()) {
+    final List<Comment> comments = new ArrayList<>();
+    for (Entity entity : results.asIterable()) {
       long id = entity.getKey().getId();
       String content = (String) entity.getProperty("content");
       long timestamp = (long) entity.getProperty("timestamp");
@@ -54,8 +52,6 @@ public class DataServlet extends HttpServlet {
     }
     // Convert arrayList into json using Gson.
     String json = new Gson().toJson(comments);
-    System.out.println("Comment in DataServlet: ");
-    System.out.println(json);
     response.setContentType("application/json;");
     response.getWriter().println(json);
   }
@@ -65,7 +61,7 @@ public class DataServlet extends HttpServlet {
     // Get the comment from the form.
     String content = request.getParameter("title");
     long timestamp = System.currentTimeMillis();
-    String ipAddr = request.getRemoteAddr();  // Used to uniquely identify user.
+    String ipAddr = request.getRemoteAddr();
 
     // Create entity for comment.
     Entity commentEntity = new Entity("Comment");
