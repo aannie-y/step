@@ -47,7 +47,8 @@ public class DataServlet extends HttpServlet {
       long timestamp = (long) entity.getProperty("timestamp");
       String ip = (String) entity.getProperty("ip");
 
-      comments.add(new Comment(id, content, timestamp, ip));
+      // TODO: use actual image URL when functionality is complete.
+      comments.add(new Comment(id, content, timestamp, ip, /*imageUrl=*/null));
     }
     // Convert arrayList into json using Gson.
     String json = new Gson().toJson(comments);
