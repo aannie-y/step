@@ -14,17 +14,29 @@
 
 package com.google.sps.servlets;
 
+import com.google.appengine.api.blobstore.BlobInfo;
+import com.google.appengine.api.blobstore.BlobInfoFactory;
+import com.google.appengine.api.blobstore.BlobKey;
+import com.google.appengine.api.blobstore.BlobstoreService;
+import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
+import com.google.appengine.api.images.ImagesService;
+import com.google.appengine.api.images.ImagesServiceFactory;
+import com.google.appengine.api.images.ServingUrlOptions;
 import com.google.gson.Gson;
 import com.google.sps.data.Comment;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -46,8 +58,9 @@ public class DataServlet extends HttpServlet {
       String content = (String) entity.getProperty("content");
       long timestamp = (long) entity.getProperty("timestamp");
       String ip = (String) entity.getProperty("ip");
+      String imageUrl = (String) entity.getProperty("imageUrl");
 
-      comments.add(new Comment(id, content, timestamp, ip));
+      comments.add(new Comment(id, content, timestamp, ip, imageUrl));
     }
     // Convert arrayList into json using Gson.
     String json = new Gson().toJson(comments);
@@ -62,15 +75,59 @@ public class DataServlet extends HttpServlet {
     long timestamp = System.currentTimeMillis();
     String ipAddr = request.getRemoteAddr();
 
+    // Get the image from the form.
+    String imageUrl = getUploadedFileUrl(request, "image");
+
     // Create entity for comment.
     Entity commentEntity = new Entity("Comment");
     commentEntity.setProperty("ip", ipAddr);
     commentEntity.setProperty("content", content);
     commentEntity.setProperty("timestamp", timestamp);
 
+    // If image submitted by user, add url to entity.
+    if (imageUrl != null) {
+      commentEntity.setProperty("imageUrl", imageUrl);
+    } else {
+      commentEntity.setProperty("imageUrl", "null");
+    }
+
     // Store entity into datastore.
     datastore.put(commentEntity);
 
     response.sendRedirect("/index.html");
+  }
+
+  /** Returns a URL that points to the uploaded file, or null if the user didn't upload a file. */
+  private String getUploadedFileUrl(HttpServletRequest request, String formInputElementName) {
+    final BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+    Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
+    List<BlobKey> blobKeys = blobs.get("image");
+
+    // User submitted form without selecting file, cannot get URL. (dev server)
+    if (blobKeys == null || blobKeys.isEmpty()) {
+      return null;
+    }
+
+    BlobKey blobKey = blobKeys.get(0);
+
+    // User submitted form without selecting a file cannot get URL. (live server)
+    BlobInfo blobInfo = new BlobInfoFactory().loadBlobInfo(blobKey);
+    if (blobInfo.getSize() == 0) {
+      blobstoreService.delete(blobKey);
+      return null;
+    }
+
+    // Use ImageServices to get a URL that points to the uploaded file.
+    ImagesService imagesService = ImagesServiceFactory.getImagesService();
+    ServingUrlOptions options = ServingUrlOptions.Builder.withBlobKey(blobKey);
+
+    // To support running in Google Cloud Shell, we use relative path to image, 
+    // rather than path returned by imagesService.
+    try {
+      URL url = new URL(imagesService.getServingUrl(options));
+      return url.getPath();
+    } catch (MalformedURLException e) {
+      return imagesService.getServingUrl(options);
+    }
   }
 }
