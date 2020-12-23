@@ -68,6 +68,7 @@ function createCommentElement(comment) {
   titleElement.innerText = comment.content;
   console.log(comment.content);
 
+  
   const deleteButtonElement = document.createElement('button');
   deleteButtonElement.innerText = 'Delete';
   deleteButtonElement.addEventListener('click', () => {
@@ -76,6 +77,13 @@ function createCommentElement(comment) {
   });
 
   commentElement.appendChild(titleElement);
+
+  if (comment.imageUrl != 'null') {
+    const imgElement = document.createElement('img');
+    imgElement.src = comment.imageUrl;
+    commentElement.appendChild(imgElement);
+  }
+
   commentElement.appendChild(deleteButtonElement);
   return commentElement;
 }
@@ -84,4 +92,17 @@ function deleteComment(comment) {
   const params = new URLSearchParams();
   params.append('id', comment.id);
   fetch('/delete-data', {method: 'POST', body: params});
+}
+
+/** Make a GET request to /blobstore-upload-url */
+function fetchBlobstoreUrlAndShowForm() {
+  fetch('/blobstore-upload-url')
+      .then((response) => {
+        return response.text();
+      })
+      .then((imageUploadUrl) => {
+        const messageForm = document.getElementById('my-form');
+        messageForm.action = imageUploadUrl;
+        messageForm.classList.remove('hidden');
+      });
 }
