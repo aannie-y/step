@@ -79,36 +79,33 @@ public class DataServlet extends HttpServlet {
     // Get the image from the form.
     String imageUrl = getUploadedFileUrl(request, "image");
 
-    if (content != "" || imageUrl != null) {
-      // Create entity for comment.
-      Entity commentEntity = new Entity("Comment");
-      commentEntity.setProperty("ip", ipAddr);
-      commentEntity.setProperty("content", content);
-      commentEntity.setProperty("timestamp", timestamp);
-  
-      // If image submitted by user, add url to entity.
-      if (imageUrl != null) {
-        commentEntity.setProperty("imageUrl", imageUrl);
-      } else {
-        commentEntity.setProperty("imageUrl", "null");
-      }
-      System.out.println("===============MESSAGE===============");
-      System.out.println(content);
-  
-      System.out.println("==============IMAGE===============");
-      System.out.println(imageUrl);
-      // Store entity into datastore.
-      datastore.put(commentEntity);
+    // Create entity for comment.
+    Entity commentEntity = new Entity("Comment");
+    commentEntity.setProperty("ip", ipAddr);
+    commentEntity.setProperty("content", content);
+    commentEntity.setProperty("timestamp", timestamp);
+
+    // If image submitted by user, add url to entity.
+    if (imageUrl != null) {
+      commentEntity.setProperty("imageUrl", imageUrl);
     } else {
-        System.out.println("=============ERROR=============");
-        PrintWriter out = response.getWriter();
-        String error = "Error!";
-        // getServletContext().getRequestDispatcher("/index.html").forward(request,response);
-        out.println("<html><head>");
-        out.println("<script type='text/javascript'>");
-        out.println("alert(" + "'" + error + "'" + ");</script>");
-        out.println("</head><body></body></html>");
+      commentEntity.setProperty("imageUrl", "null");
     }
+    System.out.println("===============MESSAGE===============");
+    System.out.println(content);
+
+    System.out.println("==============IMAGE===============");
+    System.out.println(imageUrl);
+    // Store entity into datastore.
+    datastore.put(commentEntity);
+      // System.out.println("=============ERROR=============");
+      // PrintWriter out = response.getWriter();
+      // String error = "Error!";
+      // // getServletContext().getRequestDispatcher("/index.html").forward(request,response);
+      // out.println("<html><head>");
+      // out.println("<script type='text/javascript'>");
+      // out.println("alert(" + "'" + error + "'" + ");</script>");
+      // out.println("</head><body></body></html>");
     response.sendRedirect("/index.html");
   }
 
