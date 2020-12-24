@@ -37,7 +37,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -91,21 +90,9 @@ public class DataServlet extends HttpServlet {
     } else {
       commentEntity.setProperty("imageUrl", "null");
     }
-    System.out.println("===============MESSAGE===============");
-    System.out.println(content);
 
-    System.out.println("==============IMAGE===============");
-    System.out.println(imageUrl);
     // Store entity into datastore.
     datastore.put(commentEntity);
-      // System.out.println("=============ERROR=============");
-      // PrintWriter out = response.getWriter();
-      // String error = "Error!";
-      // // getServletContext().getRequestDispatcher("/index.html").forward(request,response);
-      // out.println("<html><head>");
-      // out.println("<script type='text/javascript'>");
-      // out.println("alert(" + "'" + error + "'" + ");</script>");
-      // out.println("</head><body></body></html>");
     response.sendRedirect("/index.html");
   }
 
@@ -133,7 +120,7 @@ public class DataServlet extends HttpServlet {
     ImagesService imagesService = ImagesServiceFactory.getImagesService();
     ServingUrlOptions options = ServingUrlOptions.Builder.withBlobKey(blobKey);
 
-    // To support running in Google Cloud Shell, we use relative path to image, 
+    // To support running in Google Cloud Shell, we use relative path to image,
     // rather than path returned by imagesService.
     try {
       URL url = new URL(imagesService.getServingUrl(options));
