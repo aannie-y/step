@@ -71,7 +71,7 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get the comment from the form.
-    String content = request.getParameter("title");
+    String content = request.getParameter("message");
     long timestamp = System.currentTimeMillis();
     String ipAddr = request.getRemoteAddr();
 
@@ -90,10 +90,14 @@ public class DataServlet extends HttpServlet {
     } else {
       commentEntity.setProperty("imageUrl", "null");
     }
+    System.out.println("===============MESSAGE===============");
+    System.out.println(content);
 
     // Store entity into datastore.
     datastore.put(commentEntity);
 
+    System.out.println("==============IMAGE===============");
+    System.out.println(imageUrl);
     response.sendRedirect("/index.html");
   }
 
