@@ -70,12 +70,12 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     // Get the comment from the form.
-    String content = request.getParameter("message");
-    long timestamp = System.currentTimeMillis();
-    String ipAddr = request.getRemoteAddr();
+    final String content = request.getParameter("message");
+    final long timestamp = System.currentTimeMillis();
+    final String ipAddr = request.getRemoteAddr();
 
     // Get the image from the form.
-    String imageUrl = getUploadedFileUrl(request, "image");
+    final String imageUrl = getUploadedFileUrl(request, "image");
 
     // Create entity for comment.
     Entity commentEntity = new Entity("Comment");
