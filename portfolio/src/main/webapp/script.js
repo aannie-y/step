@@ -64,12 +64,9 @@ function createCommentElement(comment) {
   const commentElement = document.createElement('li');
   commentElement.className = 'comment';
 
-  // if (comment.content != null) {
-    const titleElement = document.createElement('span');
-    titleElement.innerText = comment.content;
-    console.log(comment.content);
-    commentElement.appendChild(titleElement);
-  // }
+  const titleElement = document.createElement('span');
+  titleElement.innerText = comment.content;
+  commentElement.appendChild(titleElement);
 
   const deleteButtonElement = document.createElement('button');
   deleteButtonElement.innerText = 'Delete';
