@@ -85,3 +85,9 @@ function deleteComment(comment) {
   params.append('id', comment.id);
   fetch('/delete-data', {method: 'POST', body: params});
 }
+
+function createMap() {
+  const map = new google.maps.Map(
+      document.getElementById('map'),
+      {center: {lat: -33.865, lng: 151.209}, zoom: 12});
+}
