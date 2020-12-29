@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body>
+  <body onload="fetchBlobstoreUrlAndShowForm()">
     <div class="topnav" id="myTopNav">
       <a href="#home" class="active">Home</a>
       <a href="#about">About me</a>
@@ -100,11 +100,14 @@
         <div id="fact-container"></div>
       </div>
       </br>
-      <form action="/comment" method="POST">
-        <p>Please leave a comment:</p>
-        <textarea name="title">Enter comment</textarea>
+      <form id="comment-form" class="hidden" method="POST" enctype="multipart/form-data">
+        <p>Please enter a comment:</p>
+        <textarea name="message"></textarea>
+        <br/>
+        <p>Upload an image:</p>
+        <input type="file" name="image">
         <br/><br/>
-        <input type="submit" value="submit"/>
+        <button>Submit</button>
       </form>
       <p>Click to view comments</p>
       <button onclick="loadComments()">Comments</button>
