@@ -5,8 +5,9 @@
     <title>Annie's Portfolio</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
+    <script src="config.js"></script>
   </head>
-  <body>
+  <body onload="createMap()">
     <div class="topnav" id="myTopNav">
       <a href="#home" class="active">Home</a>
       <a href="#about">About me</a>
@@ -100,6 +101,8 @@
         <div id="fact-container"></div>
       </div>
       </br>
+      <h2>Maps API</h2>
+      <div id="map"></div>
       <form action="/comment" method="POST">
         <p>Please leave a comment:</p>
         <textarea name="title">Enter comment</textarea>
