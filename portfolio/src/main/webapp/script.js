@@ -75,7 +75,7 @@ function createCommentElement(comment) {
     commentElement.remove();
   });
 
-  if (comment.imageUrl != 'null') {
+  if (comment.imageUrl != null) {
     const imgElement = document.createElement('img');
     imgElement.src = comment.imageUrl;
     commentElement.appendChild(imgElement);
@@ -91,7 +91,7 @@ function deleteComment(comment) {
   fetch('/delete-data', {method: 'POST', body: params});
 }
 
-/** Make a GET request to /blobstore-upload-url */
+/** Make a GET request to /blobstore-url */
 function fetchBlobstoreUrlAndShowForm() {
   fetch('/blobstore-url')
       .then((response) => {
