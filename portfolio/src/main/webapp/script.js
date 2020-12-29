@@ -103,3 +103,46 @@ function fetchBlobstoreUrlAndShowForm() {
         messageForm.classList.remove('hidden');
       });
 }
+
+/** Map of Sydney CBD. */
+function createMap() {
+  const sydneyMap = new google.maps.Map(
+      document.getElementById('map'),
+      {center: {lat: -33.865, lng: 151.209}, zoom: 14});
+
+  const ichibanMarker = new google.maps.Marker({
+      position: {lat: -33.87220, lng: 151.20723},
+      map: map,
+      title: 'Ichi-ban Boshi (Japanese)'
+  });
+
+  const donDonMarker = new google.maps.Marker({
+      position: {lat: -33.87600, lng: 151.20644},
+      map: map,
+      title: 'Don don (Korean)'
+  });
+
+  const masuyaMarker = new google.maps.Marker({
+      position: {lat: -33.86508, lng: 151.20987},
+      map: map,
+      title: 'Masuya (Japanese)'
+  });
+
+  const malatangMarker = new google.maps.Marker({
+      position: {lat: -33.87619, lng: 151.20446},
+      map: map,
+      title: 'Malatang (Chinese)'
+  });
+
+  const vapianoMarker = new google.maps.Marker({
+      position: {lat: -33.86866, lng: 151.20596},
+      map: map,
+      title: 'Vapiano (Italian)'
+  });
+
+  const kfcMarker = new google.maps.Marker({
+      position: {lat: -33.87462, lng: 151.20707},
+      map: map,
+      title: 'KFC'
+  });
+}

@@ -5,8 +5,9 @@
     <title>Annie's Portfolio</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
+    <script src="config.js"></script>
   </head>
-  <body onload="fetchBlobstoreUrlAndShowForm()">
+  <body onload="fetchBlobstoreUrlAndShowForm(); createMap()">
     <div class="topnav" id="myTopNav">
       <a href="#home" class="active">Home</a>
       <a href="#about">About me</a>
@@ -100,14 +101,14 @@
         <div id="fact-container"></div>
       </div>
       </br>
+      <h2>Maps API</h2>
+      <div id="map"></div>
       <form id="comment-form" class="hidden" method="POST" enctype="multipart/form-data">
         <p>Please enter a comment:</p>
         <textarea name="message"></textarea>
         <br/>
         <p>Upload an image:</p>
         <input type="file" name="image">
-        <br/><br/>
-        <button>Submit</button>
       </form>
       <p>Click to view comments</p>
       <button onclick="loadComments()">Comments</button>
