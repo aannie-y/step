@@ -82,7 +82,11 @@ public class DataServlet extends HttpServlet {
     commentEntity.setProperty("ip", ipAddr);
     commentEntity.setProperty("content", content);
     commentEntity.setProperty("timestamp", timestamp);
-    commentEntity.setProperty("imageUrl", imageUrl);
+
+    // Store image URL if provided to save storage.
+    if (imageUrl != null) {
+      commentEntity.setProperty("imageUrl", imageUrl);
+    }
 
     // Store entity into datastore.
     datastore.put(commentEntity);
