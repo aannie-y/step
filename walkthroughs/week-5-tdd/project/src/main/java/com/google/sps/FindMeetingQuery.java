@@ -24,7 +24,7 @@ public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
     // Cases
     // Options for no attendees - should be available all day.
-    if (request.getAttendees().size() == 0) {
+    if (request.getAttendees().isEmpty()) {
       return Arrays.asList(TimeRange.WHOLE_DAY);
     }
     // Duration longer than a day will return empty array.
@@ -39,7 +39,7 @@ public final class FindMeetingQuery {
 
     // If there are no available timeslots for all attendees including optional attendees,
     // Find availabilities for the mandatory attendees.
-    if (allAttendeesAvailabilities.size() == 0) {
+    if (allAttendeesAvailabilities.isEmpty()) {
       return findAvailability(events, request, request.getAttendees());
     }
 
@@ -57,11 +57,11 @@ public final class FindMeetingQuery {
       }
     }
     // If there are no unavailable times, return whole day.
-    if (unavailabilities.size() == 0) {
+    if (unavailabilities.isEmpty()) {
       return Arrays.asList(TimeRange.WHOLE_DAY);
     }
     List<TimeRange> mergedUnavailabilities =
-        mergeAllUnavailabilities((ArrayList<TimeRange>) unavailabilities);
+        mergeAllUnavailabilities(unavailabilities);
 
     // Find all available times by checking if gaps between busy time ranges are greater than the
     // duration.
@@ -85,7 +85,7 @@ public final class FindMeetingQuery {
    * Private helper method using Stack to merge overlapping time ranges from an ArrayList.
    * Merging code from https://www.geeksforgeeks.org/merging-intervals/
    */
-  private List<TimeRange> mergeAllUnavailabilities(ArrayList<TimeRange> unavailabilities) {
+  private List<TimeRange> mergeAllUnavailabilities(List<TimeRange> unavailabilities) {
     Stack<TimeRange> unavailabilitiesStack = new Stack<>();
     unavailabilities.sort(TimeRange.ORDER_BY_START);
 
@@ -96,15 +96,16 @@ public final class FindMeetingQuery {
     for (int i = 1; i < unavailabilities.size(); i++) {
       TimeRange top = unavailabilitiesStack.peek();
 
+      TimeRange currentRange = unavailabilities.get(i);
       // If current time range is not overlapping with the top, push it to the stack.
-      if (!top.overlaps(unavailabilities.get(i))) {
-        unavailabilitiesStack.push(unavailabilities.get(i));
-      } else if (top.contains(unavailabilities.get(i))) {
+      if (!top.overlaps(currentRange)) {
+        unavailabilitiesStack.push(currentRange);
+      } else if (top.contains(currentRange)) {
         continue;
       } else {
         unavailabilitiesStack.pop();
         unavailabilitiesStack.push(
-            TimeRange.fromStartEnd(top.start(), unavailabilities.get(i).end(), false));
+            TimeRange.fromStartEnd(top.start(), currentRange.end(), false));
       }
     }
     return unavailabilitiesStack;
