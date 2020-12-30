@@ -74,7 +74,6 @@ public final class FindMeetingQuery {
       }
       start = interval.end();
     }
-    // Start is now at the end of the last unavailability time range.
     // Check if there is a lot between there and the end of the day.
     if (TimeRange.END_OF_DAY - start >= duration) {
       availabilities.add(TimeRange.fromStartEnd(start, TimeRange.END_OF_DAY, true));
@@ -83,7 +82,7 @@ public final class FindMeetingQuery {
   }
 
   /**
-   * Private helper method to merge overlapping time ranges from an ArrayList.
+   * Private helper method using Stack to merge overlapping time ranges from an ArrayList.
    * Merging code from https://www.geeksforgeeks.org/merging-intervals/
    */
   private List<TimeRange> mergeAllUnavailabilities(ArrayList<TimeRange> unavailabilities) {
