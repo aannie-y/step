@@ -66,7 +66,7 @@ function createCommentElement(comment) {
 
   const titleElement = document.createElement('span');
   titleElement.innerText = comment.content;
-  console.log(comment.content);
+  commentElement.appendChild(titleElement);
 
   const deleteButtonElement = document.createElement('button');
   deleteButtonElement.innerText = 'Delete';
@@ -75,7 +75,12 @@ function createCommentElement(comment) {
     commentElement.remove();
   });
 
-  commentElement.appendChild(titleElement);
+  if (comment.imageUrl != null) {
+    const imgElement = document.createElement('img');
+    imgElement.src = comment.imageUrl;
+    commentElement.appendChild(imgElement);
+  }
+
   commentElement.appendChild(deleteButtonElement);
   return commentElement;
 }
@@ -85,6 +90,20 @@ function deleteComment(comment) {
   params.append('id', comment.id);
   fetch('/delete-data', {method: 'POST', body: params});
 }
+
+/** Make a GET request to /blobstore-url */
+function fetchBlobstoreUrlAndShowForm() {
+  fetch('/blobstore-url')
+      .then((response) => {
+        return response.text();
+      })
+      .then((imageUploadUrl) => {
+        const messageForm = document.getElementById('comment-form');
+        messageForm.action = imageUploadUrl;
+        messageForm.classList.remove('hidden');
+      });
+}
+
 /** Map of Sydney CBD. */
 function createMap() {
   const sydneyMap = new google.maps.Map(

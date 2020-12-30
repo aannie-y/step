@@ -20,12 +20,14 @@ public final class Comment {
   private final String content;
   private final long timestamp;
   private final String ip;
+  private final String imageUrl;
 
-  public Comment(long id, String content, long timestamp, String ip) {
+  public Comment(long id, String content, long timestamp, String ip, String imageUrl) {
     this.id = id;
     this.content = content;
     this.timestamp = timestamp;
     this.ip = ip;
+    this.imageUrl = imageUrl;
   }
 
   public long getId() {
@@ -42,5 +44,9 @@ public final class Comment {
 
   public String getIp() {
     return ip;
+  }
+
+  public String getImageUrl() {
+    return imageUrl;
   }
 }

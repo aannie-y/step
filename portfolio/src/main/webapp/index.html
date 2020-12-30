@@ -7,7 +7,7 @@
     <script src="script.js"></script>
     <script src="config.js"></script>
   </head>
-  <body onload="createMap()">
+  <body onload="fetchBlobstoreUrlAndShowForm(); createMap()">
     <div class="topnav" id="myTopNav">
       <a href="#home" class="active">Home</a>
       <a href="#about">About me</a>
@@ -103,11 +103,12 @@
       </br>
       <h2>Maps API</h2>
       <div id="map"></div>
-      <form action="/comment" method="POST">
-        <p>Please leave a comment:</p>
-        <textarea name="title">Enter comment</textarea>
-        <br/><br/>
-        <input type="submit" value="submit"/>
+      <form id="comment-form" class="hidden" method="POST" enctype="multipart/form-data">
+        <p>Please enter a comment:</p>
+        <textarea name="message"></textarea>
+        <br/>
+        <p>Upload an image:</p>
+        <input type="file" name="image">
       </form>
       <p>Click to view comments</p>
       <button onclick="loadComments()">Comments</button>
