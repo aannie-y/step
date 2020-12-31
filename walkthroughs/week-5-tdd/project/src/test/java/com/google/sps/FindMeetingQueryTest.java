@@ -274,7 +274,7 @@ public final class FindMeetingQueryTest {
   @Test
   public void optionalAttendeeNotConsidered() {
     // Have each person have different events and optional attendee C has an all day event.
-    // We should see two options because each person has
+    // We should see three options because each person has
     // split the restricted times and optional attendee is not considered.
     //
     //           |-------------C---------------|
@@ -301,4 +301,3 @@ public final class FindMeetingQueryTest {
 
     Assert.assertEquals(expected, actual);
   }
-}
