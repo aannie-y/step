@@ -18,6 +18,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Deque;
 
@@ -53,7 +54,7 @@ public final class FindMeetingQuery {
     // Find all the unavailable times of the attendees.
     List<TimeRange> unavailabilities = new ArrayList<>();
     for (Event event : events) {
-      if (attendees.stream().anyMatch(s -> event.getAttendees().contains(s))) {
+      if (!Collections.disjoint(attendees, event.getAttendees())) {
         unavailabilities.add(event.getWhen());
       }
     }
