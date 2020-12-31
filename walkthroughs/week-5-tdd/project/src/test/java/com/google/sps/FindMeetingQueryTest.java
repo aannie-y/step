@@ -208,7 +208,6 @@ public final class FindMeetingQueryTest {
     // Events  : |--A--|     |----A----|
     // Day     : |---------------------|
     // Options :       |-----|
-    System.out.println("============= Just enough room ============");
     Collection<Event> events = Arrays.asList(
         new Event("Event 1", TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TIME_0830AM, false),
             Arrays.asList(PERSON_A)),
@@ -274,7 +273,7 @@ public final class FindMeetingQueryTest {
 
   @Test
   public void optionalAttendeeNotConsidered() {
-    // Have each person have different events and optional attendee C has an all day event. 
+    // Have each person have different events and optional attendee C has an all day event.
     // We should see two options because each person has
     // split the restricted times and optional attendee is not considered.
     //
@@ -287,9 +286,11 @@ public final class FindMeetingQueryTest {
             Arrays.asList(PERSON_A)),
         new Event("Event 2", TimeRange.fromStartDuration(TIME_0900AM, DURATION_30_MINUTES),
             Arrays.asList(PERSON_B)),
-        new Event("Event 3", TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TimeRange.END_OF_DAY, true),
+        new Event("Event 3",
+            TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TimeRange.END_OF_DAY, true),
             Arrays.asList(PERSON_C)));
-    MeetingRequest request = new MeetingRequest(Arrays.asList(PERSON_A, PERSON_B), DURATION_30_MINUTES);
+    MeetingRequest request =
+        new MeetingRequest(Arrays.asList(PERSON_A, PERSON_B), DURATION_30_MINUTES);
     request.addOptionalAttendee(PERSON_C);
 
     Collection<TimeRange> actual = query.query(events, request);
