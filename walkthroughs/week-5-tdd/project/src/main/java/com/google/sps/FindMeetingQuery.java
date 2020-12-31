@@ -87,28 +87,29 @@ public final class FindMeetingQuery {
    * Merging code from https://www.geeksforgeeks.org/merging-intervals/
    */
   private List<TimeRange> mergeAllUnavailabilities(List<TimeRange> unavailabilities) {
-    Deque<TimeRange> unavailabilitiesQueue = new ArrayDeque<>();
+    Deque<TimeRange> unavailabilitiesStack = new ArrayDeque<>();
     unavailabilities.sort(TimeRange.ORDER_BY_START);
 
     // Push the first unavaibility into the Deque.
-    unavailabilitiesQueue.push(unavailabilities.get(0));
+    unavailabilitiesStack.push(unavailabilities.get(0));
 
     // Start from the next unavailability and merge if necessary.
     for (int i = 1; i < unavailabilities.size(); i++) {
-      TimeRange top = unavailabilitiesQueue.peek();
+      TimeRange top = unavailabilitiesStack.peek();
 
       TimeRange currentRange = unavailabilities.get(i);
       // If current time range is not overlapping with the top, push it to the stack.
       if (!top.overlaps(currentRange)) {
-        unavailabilitiesQueue.push(currentRange);
+        unavailabilitiesStack.push(currentRange);
       } else if (top.contains(currentRange)) {
         continue;
       } else {
-        unavailabilitiesQueue.pop();
-        unavailabilitiesQueue.push(TimeRange.fromStartEnd(top.start(), currentRange.end(), false));
+        unavailabilitiesStack.pop();
+        unavailabilitiesStack.push(TimeRange.fromStartEnd(top.start(), currentRange.end(), false));
       }
     }
-    TimeRange[] arr = unavailabilitiesQueue.toArray(new TimeRange[0]);
+    // Change from Deque to Array then return the Array as a List.
+    TimeRange[] arr = unavailabilitiesStack.toArray(new TimeRange[0]);
     return Arrays.asList(arr);
   }
 }
