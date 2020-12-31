@@ -14,11 +14,12 @@
 
 package com.google.sps;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-import java.util.Stack;
+import java.util.Deque;
 
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
@@ -62,7 +63,7 @@ public final class FindMeetingQuery {
     }
     List<TimeRange> mergedUnavailabilities =
         mergeAllUnavailabilities(unavailabilities);
-
+    mergedUnavailabilities.sort(TimeRange.ORDER_BY_START);
     // Find all available times by checking if gaps between busy time ranges are greater than the
     // duration.
     List<TimeRange> availabilities = new ArrayList<>();
@@ -82,32 +83,33 @@ public final class FindMeetingQuery {
   }
 
   /**
-   * Private helper method using Stack to merge overlapping time ranges from an ArrayList.
+   * Private helper method using ArrayDeque to merge overlapping time ranges from an ArrayList.
    * Merging code from https://www.geeksforgeeks.org/merging-intervals/
    */
   private List<TimeRange> mergeAllUnavailabilities(List<TimeRange> unavailabilities) {
-    Stack<TimeRange> unavailabilitiesStack = new Stack<>();
+    Deque<TimeRange> unavailabilitiesQueue = new ArrayDeque<>();
     unavailabilities.sort(TimeRange.ORDER_BY_START);
 
-    // Push the first unavaibility into the stack.
-    unavailabilitiesStack.push(unavailabilities.get(0));
+    // Push the first unavaibility into the Deque.
+    unavailabilitiesQueue.push(unavailabilities.get(0));
 
     // Start from the next unavailability and merge if necessary.
     for (int i = 1; i < unavailabilities.size(); i++) {
-      TimeRange top = unavailabilitiesStack.peek();
+      TimeRange top = unavailabilitiesQueue.peek();
 
       TimeRange currentRange = unavailabilities.get(i);
       // If current time range is not overlapping with the top, push it to the stack.
       if (!top.overlaps(currentRange)) {
-        unavailabilitiesStack.push(currentRange);
+        unavailabilitiesQueue.push(currentRange);
       } else if (top.contains(currentRange)) {
         continue;
       } else {
-        unavailabilitiesStack.pop();
-        unavailabilitiesStack.push(
+        unavailabilitiesQueue.pop();
+        unavailabilitiesQueue.push(
             TimeRange.fromStartEnd(top.start(), currentRange.end(), false));
       }
     }
-    return unavailabilitiesStack;
+    TimeRange[] arr = unavailabilitiesQueue.toArray(new TimeRange[0]);
+    return Arrays.asList(arr);
   }
 }
