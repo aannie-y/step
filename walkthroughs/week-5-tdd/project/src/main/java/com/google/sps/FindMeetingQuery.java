@@ -19,8 +19,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Deque;
+import java.util.List;
 
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
@@ -62,8 +62,7 @@ public final class FindMeetingQuery {
     if (unavailabilities.isEmpty()) {
       return Arrays.asList(TimeRange.WHOLE_DAY);
     }
-    List<TimeRange> mergedUnavailabilities =
-        mergeAllUnavailabilities(unavailabilities);
+    List<TimeRange> mergedUnavailabilities = mergeAllUnavailabilities(unavailabilities);
     mergedUnavailabilities.sort(TimeRange.ORDER_BY_START);
     // Find all available times by checking if gaps between busy time ranges are greater than the
     // duration.
@@ -106,8 +105,7 @@ public final class FindMeetingQuery {
         continue;
       } else {
         unavailabilitiesQueue.pop();
-        unavailabilitiesQueue.push(
-            TimeRange.fromStartEnd(top.start(), currentRange.end(), false));
+        unavailabilitiesQueue.push(TimeRange.fromStartEnd(top.start(), currentRange.end(), false));
       }
     }
     TimeRange[] arr = unavailabilitiesQueue.toArray(new TimeRange[0]);
