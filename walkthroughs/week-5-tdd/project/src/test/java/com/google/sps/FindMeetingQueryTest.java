@@ -334,10 +334,10 @@ public final class FindMeetingQueryTest {
 
   @Test
   public void optionalJustEnoughRoom() {
-    // Have one mandatory person, but make it so that there is just enough room at one point in the day to
-    // have the meeting and an optional attendee busy in that one point in the day.
-    // The optional attendee should be ignored since considering their schedule would result
-    // in a time slot smaller than the requested time.
+    // Have one mandatory person, but make it so that there is just enough room at one point in the
+    // day to have the meeting and an optional attendee busy in that one point in the day. The
+    // optional attendee should be ignored since considering their schedule would result in a time
+    // slot smaller than the requested time.
     //
     // Events  : |--A--|-B-| |----A----|
     // Day     : |---------------------|
