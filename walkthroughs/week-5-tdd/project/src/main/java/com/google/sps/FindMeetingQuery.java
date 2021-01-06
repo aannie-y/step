@@ -49,7 +49,10 @@ public final class FindMeetingQuery {
     return allAttendeesAvailabilities;
   }
 
-  /** Private helper method to find all availabilities of people from the request. */
+  /**
+   * Private helper method to find all availabilities of people from the request.
+   * @return Collection of all availabile time ranges.
+   */
   private Collection<TimeRange> findAvailability(
       Collection<Event> events, MeetingRequest request, Collection<String> attendees) {
     // Find all the unavailable times of the attendees.
@@ -86,6 +89,7 @@ public final class FindMeetingQuery {
   /**
    * Private helper method using ArrayDeque to merge overlapping time ranges from an ArrayList.
    * Merging code from https://www.geeksforgeeks.org/merging-intervals/
+   * @return List of all merged availabilities
    */
   private List<TimeRange> mergeAllUnavailabilities(List<TimeRange> unavailabilities) {
     Deque<TimeRange> unavailabilitiesStack = new ArrayDeque<>();
