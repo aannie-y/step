@@ -21,6 +21,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
+import java.util.ListIterator;
 
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
@@ -48,7 +49,10 @@ public final class FindMeetingQuery {
     return allAttendeesAvailabilities;
   }
 
-  /** Private helper method to find all availabilities of people from the request. */
+  /**
+   * Private helper method to find all availabilities of people from the request.
+   * @return Collection of all availabile time ranges.
+   */
   private Collection<TimeRange> findAvailability(
       Collection<Event> events, MeetingRequest request, Collection<String> attendees) {
     // Find all the unavailable times of the attendees.
@@ -63,7 +67,7 @@ public final class FindMeetingQuery {
       return Arrays.asList(TimeRange.WHOLE_DAY);
     }
     List<TimeRange> mergedUnavailabilities = mergeAllUnavailabilities(unavailabilities);
-    mergedUnavailabilities.sort(TimeRange.ORDER_BY_START);
+    Collections.reverse(mergedUnavailabilities);
     // Find all available times by checking if gaps between busy time ranges are greater than the
     // duration.
     List<TimeRange> availabilities = new ArrayList<>();
@@ -75,7 +79,7 @@ public final class FindMeetingQuery {
       }
       start = interval.end();
     }
-    // Check if there is a lot between there and the end of the day.
+    // Check if there is a gap between there and the end of the day.
     if (TimeRange.END_OF_DAY - start >= duration) {
       availabilities.add(TimeRange.fromStartEnd(start, TimeRange.END_OF_DAY, true));
     }
@@ -85,6 +89,7 @@ public final class FindMeetingQuery {
   /**
    * Private helper method using ArrayDeque to merge overlapping time ranges from an ArrayList.
    * Merging code from https://www.geeksforgeeks.org/merging-intervals/
+   * @return List of all merged availabilities
    */
   private List<TimeRange> mergeAllUnavailabilities(List<TimeRange> unavailabilities) {
     Deque<TimeRange> unavailabilitiesStack = new ArrayDeque<>();
