@@ -27,7 +27,7 @@ public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
     // Cases
     // Options for no attendees - should be available all day.
-    if (request.getAttendees().isEmpty()) {
+    if (request.getAttendees().isEmpty() && request.getOptionalAttendees().isEmpty()) {
       return Arrays.asList(TimeRange.WHOLE_DAY);
     }
     // Duration longer than a day will return empty array.
