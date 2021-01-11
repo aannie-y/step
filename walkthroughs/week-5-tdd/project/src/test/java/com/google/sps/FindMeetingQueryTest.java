@@ -14,6 +14,8 @@
 
 package com.google.sps;
 
+import static com.google.common.truth.Truth.assertThat;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -377,12 +379,9 @@ public final class FindMeetingQueryTest {
     request.addOptionalAttendee(PERSON_A);
     request.addOptionalAttendee(PERSON_B);
 
-    Collection<TimeRange> actual = query.query(events, request);
-    Collection<TimeRange> expected =
-        Arrays.asList(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TIME_0900AM, false),
+    assertThat(query.query(events, request))
+        .containsExactly(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, TIME_0900AM, false),
             TimeRange.fromStartEnd(TIME_0930AM, TIME_1000AM, false),
             TimeRange.fromStartEnd(TIME_1100AM, TimeRange.END_OF_DAY, true));
-
-    Assert.assertEquals(expected, actual);
   }
 }
